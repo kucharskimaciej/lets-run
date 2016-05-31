@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony index.js"
+    "start": "node --harmony index.js",
+    "preinstall": "npm i -g bower gulp-cli"
   },
   "repository": {
     "type": "git",
@@ -15,7 +16,6 @@
   "bugs": {
     "url": "https://github.com/kucharskimaciej/lets-run/issues"
   },
-  "homepage": "https://github.com/kucharskimaciej/lets-run#readme",
   "dependencies": {
     "co-body": "^4.2.0",
     "co-redis": "^2.1.0",
@@ -25,5 +25,19 @@
     "koa-route": "^2.4.2",
     "koa-send": "^3.2.0",
     "koa-static": "^2.0.0"
+  },
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "gulp": "^3.9.1",
+    "gulp-angular-filesort": "^1.1.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-filter": "^4.0.0",
+    "gulp-ng-html2js": "^0.2.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^2.3.1",
+    "gulp-sass-glob": "^1.0.6",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watch": "^4.3.6",
+    "main-bower-files": "^2.13.1"
   }
 }
