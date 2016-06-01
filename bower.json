@@ -1,0 +1,19 @@
+{
+  "name": "lets-run",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Maciej Kucharski",
+    "Agnieszka Bugajska"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/kucharskimaciej/lets-run",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
