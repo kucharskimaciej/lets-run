@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node --harmony index.js",
-    "preinstall": "npm i -g bower gulp-cli"
+    "preinstall": "npm i -g bower gulp-cli",
+    "postinstall": "bower install && gulp build"
   },
   "repository": {
     "type": "git",
