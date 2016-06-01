@@ -38,6 +38,7 @@
     "gulp-sass-glob": "^1.0.6",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-watch": "^4.3.6",
+    "gulp-run-sequence": "^0.3.2",
     "main-bower-files": "^2.13.1"
   }
 }

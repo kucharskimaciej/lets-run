@@ -8,6 +8,7 @@ const filter = require('gulp-filter');
 const sass = require('gulp-sass');
 const maps = require('gulp-sourcemaps');
 const glob = require('gulp-sass-glob');
+var runSequence = require('gulp-run-sequence');
 
 const {paths} = require('./config');
 
@@ -47,16 +48,12 @@ const buildStyles = () =>
         .pipe(maps.write())
         .pipe(gulp.dest(paths.build));
 
-const build = () =>
-    gulp.src(paths.main)
-        .pipe(buildVendor())
-        .pipe(buildTemplates())
-        .pipe(buildApp())
-        .pipe(buildStyles())
-        .pipe(gulp.dest(paths.build));
+const build = (cb) =>
+    runSequence(['build:libs', 'build:templates', 'build:css', 'build:app'], cb);
+
 
 gulp.task('build:templates', buildTemplates);
 gulp.task('build:libs', buildVendor);
 gulp.task('build:app', buildApp);
 gulp.task('build:css', buildStyles);
-gulp.task('build', buildStyles);
+gulp.task('build', build);
