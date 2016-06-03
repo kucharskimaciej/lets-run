@@ -27,7 +27,8 @@
       this.participants.push(participant);
     };
     this.removeParticipant = function(participant) {;
-      this.participants.splice(participant, 1);
+      var index = this.participants.indexOf(participant)
+      this.participants.splice(index, 1);
     };
   });
 })();
