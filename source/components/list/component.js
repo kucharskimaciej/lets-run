@@ -1,7 +1,7 @@
 (function(){
   angular.module('usersList', ['participants'])
     .component('usersListComp', {
-      templateUrl: 'components/listComp/list-template.html',
+      templateUrl: 'components/list/template.html',
       bindings: {
         participants: '<'
       },

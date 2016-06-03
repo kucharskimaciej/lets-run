@@ -1,7 +1,7 @@
 (function(){
   angular.module('form', ['participants'])
     .component('formComp', {
-      templateUrl: 'components/formComp/form-temp.html',
+      templateUrl: 'components/form/template.html',
       bindings: {
         participants: "<"
       },
