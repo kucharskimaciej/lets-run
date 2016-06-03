@@ -9,6 +9,7 @@
         this.addParticipant = function(participant){
           Participants.addParticipant(participant);
           this.participant = {};
+    
         };
       }
     });
