@@ -26,5 +26,8 @@
     this.addParticipant = function(participant){
       this.participants.push(participant);
     };
+    this.removeParticipant = function(participant) {;
+      this.participants.splice(participant, 1);
+    };
   });
 })();
