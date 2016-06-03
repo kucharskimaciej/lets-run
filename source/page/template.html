@@ -1,9 +1,5 @@
 <div ng-controller="ParticipantsCtrl as ctrl">
-  <ul>
-    <li ng-repeat="user in ctrl.users">
-      {{user.name}}
-    </li>
-  </ul>
+  <users-list-comp participants="ctrl.participants"></users-list-comp>
   <form action="">
     <input type="text" ng-model="ctrl.participant.name">
     <span>{{ctrl.participant | json}}</span>
