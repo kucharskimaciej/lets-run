@@ -1,8 +1,4 @@
 <div ng-controller="ParticipantsCtrl as ctrl">
   <users-list-comp participants="ctrl.participants"></users-list-comp>
-  <form action="">
-    <input type="text" ng-model="ctrl.participant.name">
-    <span>{{ctrl.participant | json}}</span>
-    <button type="submit" ng-click="ctrl.addParticipant(ctrl.participant)">dodaj</button>
-  </form>
+  <form-comp participants="ctrl.participants"></form-comp>
 </div>

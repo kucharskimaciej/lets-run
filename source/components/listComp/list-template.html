@@ -1,6 +1,7 @@
 <ul>
-  <li ng-repeat="participant in ctrl.participants">
-    {{user.name}}
-    <button ng-click="ctrl.removeParticipant(participant)">delete</button>
+  <li ng-repeat="participant in $ctrl.participants">
+    {{participant.name}}
+    {{participant.id}}
+    <button ng-click="$ctrl.removeParticipant(participant)">delete</button>
   </li>
 </ul>
