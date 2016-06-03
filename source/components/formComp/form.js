@@ -5,7 +5,7 @@
       bindings: {
         participants: "<"
       },
-      controller: function(Participants, $scope){
+      controller: function(Participants){
         this.addParticipant = function(participant){
           Participants.addParticipant(participant);
           this.participant = {};
@@ -14,8 +14,8 @@
           //   console.log("koniec");
           // }
         };
-        $scope.items = ['one', 'two', 'three'];
-        $scope.selection = $scope.items[0];
+        this.items = ['one', 'two', 'three'];
+        this.selection = this.items[0];
       }
     });
 

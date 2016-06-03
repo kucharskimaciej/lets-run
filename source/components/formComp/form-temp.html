@@ -4,7 +4,7 @@
     <button class="btn btn-primary" type="submit" ng-click="$ctrl.addParticipant($ctrl.participant)">dodaj</button>
 
     <div>
-      <select ng-model="selection" ng-options="item for item in items"></select>
+      <select ng-model="selection" ng-options="item for item in $ctrl.items"></select>
       <div ng-switch on="selection">
         <div ng-switch-when="one">pierwsze sekcja</div>
         <div ng-switch-when="two">druga sekcja</div>
