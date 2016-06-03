@@ -4,23 +4,28 @@
     this.participants = [
       {
         name: 'Aga',
-        id: 1
+        id: 1,
+        email: 'email1@ol.pl'
       },
       {
         name: 'Maciek',
-        id: 2
+        id: 2,
+        email: 'email2@ol.pl'
       },
       {
         name: 'Tomson',
-        id: 3
+        id: 3,
+        email: 'email3@ol.pl'
       },
       {
         name: 'Marta',
-        id: 4
+        id: 4,
+        email: 'email4@ol.pl'
       },
       {
         name: 'Gosia',
-        id: 5
+        id: 5,
+        email: 'email5@ol.pl'
       }
     ];
     this.addParticipant = function(participant){
