@@ -24,7 +24,7 @@
       }
     ];
     this.addParticipant = function(participant){
-      this.participants.push(participant);
+      this.participants.unshift(participant);
     };
     this.removeParticipant = function(participant) {;
       var index = this.participants.indexOf(participant)

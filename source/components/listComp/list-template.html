@@ -1,7 +1,7 @@
-<ul>
-  <li ng-repeat="participant in $ctrl.participants">
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="participant in $ctrl.participants">
     {{participant.name}}
     {{participant.id}}
-    <button ng-click="$ctrl.removeParticipant(participant)">delete</button>
+    <button class="btn btn-danger btn-xs pull-right" ng-click="$ctrl.removeParticipant(participant)">delete</button>
   </li>
 </ul>
