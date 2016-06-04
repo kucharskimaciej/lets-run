@@ -50,14 +50,25 @@ app.use(route.post('/api/participants', function* () {
     const createUserCommand = redis.multi()
         .set(`${nameKey}`, id)
         .hmset(`us:${id}`, {
-            name, token
+            name, token, id
         });
     yield createUserCommand.exec();
 
     this.status = 200;
 
 }));
+app.use(route.get('/api/participants', function* () {
 
+    const keys = yield redis.keys('us:*');
+    const getAllUsersCommand = keys.reduce(($, key) => {
+        return $.hgetall(key);
+    }, redis.multi());
+
+    const result = yield getAllUsersCommand.exec();
+
+    this.status = 200;
+    this.body = JSON.stringify(result);
+}));
 
 // APPLICATION ROUTES
 app.use(route.get('/*', function* () {
