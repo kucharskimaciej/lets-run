@@ -3,11 +3,16 @@ const logger = require('koa-logger');
 const serve = require('koa-static');
 const send = require('koa-send');
 const route = require('koa-route');
+const body = require('koa-body');
+
+const REDIS_OPTIONS = {
+    url: '//localhost:6379'
+};
+const redisClient = require('redis').createClient(REDIS_OPTIONS);
+const redis = require('co-redis')(redisClient);
 
 const session = require('koa-generic-session');
-const redisSession = require('koa-redis')({
-    url: '//localhost:6379'
-});
+const redisSession = require('koa-redis')(REDIS_OPTIONS);
 const uuid = require('node-uuid').v4;
 
 const {join} = require('path');
@@ -15,6 +20,7 @@ const {join} = require('path');
 const app = koa();
 
 // ASSETS
+app.use(body());
 app.use(serve(join(__dirname, 'public')));
 
 // SESSION
@@ -27,13 +33,34 @@ app.use(session({
     }
 }));
 
+const USER_SEQUENCE_KEY = 'sequence:user';
+app.use(route.post('/api/participants', function* () {
+
+    const { name } = this.request.body;
+    const nameKey = `name:${name.toLowerCase().replace(/\s*/g, '')}`;
+    const token = uuid();
+
+    const userExists = yield redis.get(nameKey);
+    if (userExists) {
+        this.status = 400;
+        return;
+    }
+
+    const id = yield redis.incr(USER_SEQUENCE_KEY);
+    const createUserCommand = redis.multi()
+        .set(`${nameKey}`, id)
+        .hmset(`us:${id}`, {
+            name, token
+        });
+    yield createUserCommand.exec();
+
+    this.status = 200;
+
+}));
+
 
 // APPLICATION ROUTES
 app.use(route.get('/*', function* () {
-    if (!this.session.token) {
-        this.session.token = uuid();
-    }
-
     yield send(this, 'index.html', { root: __dirname + '/views' });
 }));
 
