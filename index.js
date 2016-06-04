@@ -70,6 +70,21 @@ app.use(route.get('/api/participants', function* () {
     this.body = JSON.stringify(result);
 }));
 
+app.use(route.delete('/api/participants/:id', function* (id) {
+    const user = yield redis.hgetall(`us:${id}`);
+
+    if (!user) {
+        this.status = 404;
+        return;
+    }
+    const nameKey = `name:${user.name.toLowerCase().replace(/\s*/g, '')}`;
+    const getRemoveUserCommand = redis.multi().del(nameKey).del(`us:${id}`);
+
+    yield getRemoveUserCommand.exec();
+
+    this.status = 200;
+}));
+
 // APPLICATION ROUTES
 app.use(route.get('/*', function* () {
     yield send(this, 'index.html', { root: __dirname + '/views' });
