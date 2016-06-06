@@ -21,7 +21,18 @@ const {join} = require('path');
 const app = koa();
 
 // ASSETS
-app.use(body());
+app.use(body({
+    strict: false // parse DELETE request body
+}));
+app.use(function* (next) {
+    if (typeof this.request.body === 'string') {
+        try {
+            this.request.body = JSON.parse(this.request.body);
+        } catch (e) {}
+    }
+    yield next;
+});
+
 app.use(serve(join(__dirname, 'public')));
 
 // SESSION
@@ -37,7 +48,7 @@ app.use(session({
 const USER_SEQUENCE_KEY = 'sequence:user';
 app.use(route.post('/api/participants', function* () {
 
-    const { name } = this.request.body;
+    const { name, email, pass } = this.request.body;
     const nameKey = `name:${name.toLowerCase().replace(/\s*/g, '')}`;
     const token = uuid();
 
@@ -46,20 +57,29 @@ app.use(route.post('/api/participants', function* () {
         this.status = 400;
         return;
     }
-
     const id = yield redis.incr(USER_SEQUENCE_KEY);
+    const user = {
+        name, token, id
+    };
+
+    if (pass) {
+        user.pass = pass;
+    }
+
+    if (email) {
+        user.email = email;
+    }
+
     const createUserCommand = redis.multi()
         .set(`${nameKey}`, id)
-        .hmset(`us:${id}`, {
-            name, token, id
-        });
+        .hmset(`us:${id}`, user);
     yield createUserCommand.exec();
 
     this.session.token = token;
 
-    this.status = 200;
-
+    this.status = 204;
 }));
+
 app.use(route.get('/api/participants', function* () {
 
     const keys = yield redis.keys('us:*');
@@ -74,11 +94,33 @@ app.use(route.get('/api/participants', function* () {
     this.body = JSON.stringify(result);
 }));
 
-app.use(route.delete('/api/participants/:id', function* (id) {
+app.use(route.delete('/api/participants/:id/:token?', function* (id, token) {
     const user = yield redis.hgetall(`us:${id}`);
 
     if (!user) {
         this.status = 404;
+        return;
+    }
+
+    if (token && user.token !== token) {
+        this.status = 403;
+        return;
+    }
+
+    const { pass } = this.request.body;
+
+    if (pass) {
+        if (user.pass !== String(pass)) {
+            this.status = 403;
+        } else {
+            const nameKey = `name:${user.name.toLowerCase().replace(/\s*/g, '')}`;
+            const removeUserCommand = redis.multi().del(nameKey).del(`us:${id}`);
+
+            yield removeUserCommand.exec();
+
+            this.status = 200;
+        }
+
         return;
     }
 
@@ -88,9 +130,9 @@ app.use(route.delete('/api/participants/:id', function* (id) {
     }
 
     const nameKey = `name:${user.name.toLowerCase().replace(/\s*/g, '')}`;
-    const getRemoveUserCommand = redis.multi().del(nameKey).del(`us:${id}`);
+    const removeUserCommand = redis.multi().del(nameKey).del(`us:${id}`);
 
-    yield getRemoveUserCommand.exec();
+    yield removeUserCommand.exec();
 
     this.status = 200;
 }));
