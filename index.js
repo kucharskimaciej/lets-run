@@ -4,6 +4,7 @@ const serve = require('koa-static');
 const send = require('koa-send');
 const route = require('koa-route');
 const body = require('koa-body');
+const pick = require('lodash/pick');
 
 const REDIS_OPTIONS = {
     url: '//localhost:6379'
@@ -54,6 +55,8 @@ app.use(route.post('/api/participants', function* () {
         });
     yield createUserCommand.exec();
 
+    this.session.token = token;
+
     this.status = 200;
 
 }));
@@ -64,8 +67,9 @@ app.use(route.get('/api/participants', function* () {
         return $.hgetall(key);
     }, redis.multi());
 
-    const result = yield getAllUsersCommand.exec();
+    let result = yield getAllUsersCommand.exec();
 
+    result = result.map(u => pick(u, 'id', 'name'));
     this.status = 200;
     this.body = JSON.stringify(result);
 }));
@@ -77,6 +81,12 @@ app.use(route.delete('/api/participants/:id', function* (id) {
         this.status = 404;
         return;
     }
+
+    if (this.session.token !== user.token) {
+        this.status = 403;
+        return;
+    }
+
     const nameKey = `name:${user.name.toLowerCase().replace(/\s*/g, '')}`;
     const getRemoveUserCommand = redis.multi().del(nameKey).del(`us:${id}`);
 
