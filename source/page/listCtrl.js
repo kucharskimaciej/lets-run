@@ -1,7 +1,14 @@
 (function(){
   angular.module('participantsList', ['templates', 'participants', 'usersList', 'form'])
     .controller('ParticipantsCtrl', ['$scope', 'Participants', function($scope, Participants){
-      this.participants = Participants.participants;
+      var ctrl = this;
+      Participants.getAll().then(function(response){
+
+        ctrl.participants = response.data.participants;
+
+      });
+
+
     }]);
 
 })();

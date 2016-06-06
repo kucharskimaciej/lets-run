@@ -1,33 +1,14 @@
 (function(){
   angular.module('participants', [])
-  .service('Participants', function($rootScope){
-    this.participants = [
-      {
-        name: 'Aga',
-        id: 1,
-        email: 'email1@ol.pl'
-      },
-      {
-        name: 'Maciek',
-        id: 2,
-        email: 'email2@ol.pl'
-      },
-      {
-        name: 'Tomson',
-        id: 3,
-        email: 'email3@ol.pl'
-      },
-      {
-        name: 'Marta',
-        id: 4,
-        email: 'email4@ol.pl'
-      },
-      {
-        name: 'Gosia',
-        id: 5,
-        email: 'email5@ol.pl'
-      }
-    ];
+  .service('Participants', function($rootScope, $http){
+
+    this.getAll = function(){
+      return $http.get('users.json').success(function(response){
+        console.log(response);
+        return response.data;
+      });
+    },
+
     this.addParticipant = function(participant){
       this.participants.unshift(participant);
     };
