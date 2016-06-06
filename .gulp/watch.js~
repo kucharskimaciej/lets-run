@@ -4,13 +4,11 @@ const watch = require('gulp-watch');
 const {paths} = require('./config');
 
 gulp.task('watch', () => {
-    gulp.start('build');
-
     watch(paths.vendor, function () {
-        gulp.start('build:libs');
+        gulp.start('build-vendor');
     });
     watch([paths.app], function () {
-        gulp.start('build:app');
+        gulp.start('build');
     });
     watch(paths.templates, function () {
         gulp.start('build:templates');
