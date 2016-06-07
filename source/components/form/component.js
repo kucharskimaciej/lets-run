@@ -6,7 +6,6 @@
         var ctrl = this;
         ctrl.participant = {};
         ctrl.addParticipant = function(data) {
-          console.log(data);
           Participants.addParticipant(data);
         };
         this.items = ['one', 'two', 'three'];

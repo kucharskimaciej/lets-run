@@ -3,14 +3,9 @@
     .controller('ParticipantsCtrl', ['Participants', function( Participants){
       var ctrl = this;
 
-
       Participants.getAll().then(function(response){
         ctrl.participants = response.data;
       });
-
-
-
-
     }]);
 
 })();
