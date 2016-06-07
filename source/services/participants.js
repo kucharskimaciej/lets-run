@@ -3,18 +3,13 @@
   .service('Participants', function($rootScope, $http){
 
     this.getAll = function(){
-      return $http.get('users.json').success(function(response){
-        console.log(response);
+      return $http.get('/api/participants').success(function(response){
         return response.data;
       });
-    },
-
-    this.addParticipant = function(participant){
-      this.participants.unshift(participant);
     };
-    this.removeParticipant = function(participant) {;
-      var index = this.participants.indexOf(participant)
-      this.participants.splice(index, 1);
+    
+    this.addParticipant = function(data){
+      return $http.post('/api/participants', data);
     };
   });
 })();

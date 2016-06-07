@@ -1,7 +1,7 @@
 <div class="form-inline">
-  <form class="form-group" action="">
+  <form class="form-group" ng-submit="$ctrl.addParticipant($ctrl.participant)">
     <input placeholder="name" class="form-control" type="text" ng-model="$ctrl.participant.name">
-    <button class="btn btn-primary" type="submit" ng-click="$ctrl.addParticipant($ctrl.participant)">dodaj</button>
+    <button class="btn btn-primary" type="submit">dodaj</button>
 
     <div>
       <select ng-model="selection" ng-options="item for item in $ctrl.items"></select>

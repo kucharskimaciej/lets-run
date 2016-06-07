@@ -6,9 +6,9 @@
         participants: '<'
       },
       controller: function(Participants){
-        this.removeParticipant = function(participant) {
-          Participants.removeParticipant(participant);
-        };
+        // this.removeParticipant = function(participant) {
+        //   Participants.removeParticipant(participant);
+        // };
       }
     });
 
