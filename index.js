@@ -68,10 +68,11 @@ app.use(route.post('/api/participants', function* () {
         return;
     }
 
-    yield redis.createUser(this.request.body, token);
+    const user = yield redis.createUser(this.request.body, token);
 
     this.session.token = token;
-    this.status = 204;
+    this.status = 200;
+    this.body = user;
 }));
 
 app.use(route.get('/api/participants', function* () {
