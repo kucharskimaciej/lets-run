@@ -17,10 +17,11 @@ const redisSession = require('koa-redis')(REDIS_OPTIONS);
 const uuid = require('node-uuid').v4;
 
 const {join} = require('path');
+const { validateUser, validateDeleteParams } = require('./lib/validation');
 
 const app = koa();
 
-// ASSETS
+// PARSING
 app.use(body({
     strict: false // parse DELETE request body
 }));
@@ -33,6 +34,7 @@ app.use(function* (next) {
     yield next;
 });
 
+// ASSETS
 app.use(serve(join(__dirname, 'public')));
 
 // SESSION
@@ -45,15 +47,24 @@ app.use(session({
     }
 }));
 
-
+// API
 app.use(route.post('/api/participants', function* () {
 
     const { name } = this.request.body;
     const token = uuid();
 
+    const error = validateUser(this.request.body);
+
+    if (error) {
+        this.status = 400;
+        this.body = 'Invalid';
+        return;
+    }
+
     const userExists = yield redis.getUserByName(name);
     if (userExists) {
         this.status = 400;
+        this.body = 'Duplicate';
         return;
     }
 
@@ -88,6 +99,18 @@ app.use(route.delete('/api/participants/:id/:token?', function* (id, token) {
         return;
     }
 
+
+    // JSON converts to numbers
+    if(this.request.body.pass) {
+        this.request.body.pass = String(this.request.body.pass);
+    }
+    const error = validateDeleteParams(this.request.body);
+
+    if (error) {
+        this.status = 400;
+        this.body = 'Invalid';
+        return;
+    }
     const { pass } = this.request.body;
 
     if (pass) {
