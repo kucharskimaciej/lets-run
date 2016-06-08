@@ -2,12 +2,11 @@
   angular.module('form', ['participants'])
     .component('formComp', {
       templateUrl: 'components/form/template.html',
+      bindings: {
+        addParticipant: '&'
+      },
       controller: function(Participants){
-        var ctrl = this;
-        ctrl.participant = {};
-        ctrl.addParticipant = function(data) {
-          Participants.addParticipant(data);
-        };
+        
         this.items = ['one', 'two', 'three'];
         this.selection = this.items[0];
       }

@@ -1,5 +1,9 @@
+<div ng-if='!$ctrl.participants'>
+  <h3>This list is empty</h3>
+</div>
+
 <ul class="list-group">
-  <li class="list-group-item" ng-repeat="participant in $ctrl.participants">
+  <li class="list-group-item" ng-repeat="participant in $ctrl.participants | orderBy: '-id'">
     {{participant.name}}
     {{participant.id}}
     <button class="btn btn-danger btn-xs pull-right" ng-click="$ctrl.removeParticipant(participant)">delete</button>
