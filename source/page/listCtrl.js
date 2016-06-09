@@ -1,6 +1,6 @@
 (function(){
-  angular.module('participantsList', ['templates', 'participants', 'usersList', 'form'])
-    .controller('ParticipantsCtrl', ['Participants', function( Participants){
+  angular.module('participantsList', ['templates', 'participants', 'usersList', 'form', 'ngMessages' ])
+    .controller('ParticipantsCtrl', ['Participants', function(Participants){
       var ctrl = this;
       ctrl.hideForm = false;
 
@@ -14,9 +14,8 @@
           ctrl.participants.push(response.data);
           ctrl.hideForm = true;
         });
-
-
       };
+
     }]);
 
 })();

@@ -1,7 +1,18 @@
 <div class="form-inline">
-  <form class="form-group" ng-submit="$ctrl.addParticipant({data: $ctrl.participant})">
-    <input placeholder="name" class="form-control" type="text" ng-model="$ctrl.participant.name">
+  <form name="addParticipantForm" class="form-group" ng-submit="$ctrl.addParticipant({data: $ctrl.participant})">
+    <input name="addName" placeholder="name" class="form-control" type="text"
+      ng-model="$ctrl.participant.name"
+      required
+      novalidate
+      ng-minlength="3"
+      ng-maxlength="20"
+      >
     <button class="btn btn-primary" type="submit">dodaj</button>
+    <div ng-messages="addParticipantForm.addName.$error" style="color:maroon" role="alert">
+      <div ng-message="minlength">Your name is too short</div>
+      <div ng-message="maxlength">Your name is too long</div>
+    </div>
+
 
     <div>
       <select ng-model="selection" ng-options="item for item in $ctrl.items"></select>
