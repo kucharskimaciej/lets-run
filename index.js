@@ -5,19 +5,30 @@ const send = require('koa-send');
 const route = require('koa-route');
 const body = require('koa-body');
 
-
-const REDIS_OPTIONS = {
-    url: '//localhost:6379'
-};
-const redisClient = require('redis').createClient(REDIS_OPTIONS);
-const redis = require('./lib/redisCommands')(redisClient);
-
-const session = require('koa-generic-session');
-const redisSession = require('koa-redis')(REDIS_OPTIONS);
-const uuid = require('node-uuid').v4;
-
 const {join} = require('path');
 const { validateUser, validateDeleteParams } = require('./lib/validation');
+const uuid = require('node-uuid').v4;
+const session = require('koa-generic-session');
+const dotenv =  require('dotenv');
+
+dotenv.config();
+// CONFIG
+if (process.env.MAILGUN_SMTP_LOGIN && process.env.MAILGUN_SMTP_PASSWORD) {
+    process.env.MAIL_URL = `smtp://${process.env.MAILGUN_SMTP_LOGIN.replace('@', '%40')}:${process.env.MAILGUN_SMTP_PASSWORD}@`
+        + `${MAILGUN_SMTP_SERVER}:${MAILGUN_SMTP_PORT}`;
+}
+
+if (!process.env.SESSIONKEY) {
+    process.env.SESSIONKEY = 'devkey'
+}
+
+const REDIS_OPTIONS = {
+    url: process.env.REDIS_URL
+};
+
+const redisClient = require('redis').createClient(REDIS_OPTIONS);
+const redis = require('./lib/redisCommands')(redisClient);
+const redisSession = require('koa-redis')(REDIS_OPTIONS);
 
 const app = koa();
 
@@ -39,7 +50,7 @@ app.use(serve(join(__dirname, 'public')));
 
 // SESSION
 const YEAR_IN_MS = 31536000000;
-app.keys = ['devkey'];
+app.keys = [process.env.SESSIONKEY];
 app.use(session({
     store: redisSession,
     cookie: {
@@ -140,4 +151,4 @@ app.use(route.get('/*', function* () {
     yield send(this, 'index.html', { root: __dirname + '/views' });
 }));
 
-app.listen(3000);
+app.listen(process.env.PORT);

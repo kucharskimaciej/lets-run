@@ -37,3 +37,4 @@ public/bundle.js
 public/libs.js
 public/templates.js
 public/users.json
+.env
