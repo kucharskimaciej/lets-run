@@ -6,8 +6,8 @@
         addParticipant: '&'
       },
       controller: function(Participants){
-        
-        this.items = ['one', 'two', 'three'];
+
+        this.items = ['brak', 'pass', 'email'];
         this.selection = this.items[0];
       }
     });

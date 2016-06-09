@@ -17,9 +17,32 @@
     <div>
       <select ng-model="selection" ng-options="item for item in $ctrl.items"></select>
       <div ng-switch on="selection">
-        <div ng-switch-when="one">pierwsze sekcja</div>
-        <div ng-switch-when="two">druga sekcja</div>
-        <div ng-switch-when="three">trzecia sekcja</div>
+        <div ng-switch-when="brak">
+          <h5>Brak potwierdzenia</h5>
+        </div>
+        <div ng-switch-when="pass">
+          <div class="form-group">
+            <input name="password" class="form-control" type="text"
+              ng-model="password"
+              ng-minlength="3"
+            >
+            <button class="btn btn-primary">ustaw haslo</button>
+            <div ng-messages="addParticipantForm.password.$error" style="color:maroon" role="alert">
+              <div ng-message="minlength">Your password is too short</div>
+            </div>
+          </div>
+
+        </div>
+        <div ng-switch-when="email">
+          <input name="email" class="form-control" type="email"
+            ng-model="email"
+
+          >
+          <button class="btn btn-primary">wyslij email</button>
+          <div ng-messages="addParticipantForm.email.$error" style="color:maroon" role="alert">
+            <div ng-message="minlength">Your password is too short</div>
+          </div>
+        </div>
       </div>
     </div>
 
