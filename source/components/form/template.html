@@ -9,8 +9,8 @@
       >
     <button class="btn btn-primary" type="submit">dodaj</button>
     <div ng-messages="addParticipantForm.addName.$error" style="color:maroon" role="alert">
-      <div ng-message="minlength">Your name is too short</div>
-      <div ng-message="maxlength">Your name is too long</div>
+      <div ng-message="minlength">Nazwa za krotka</div>
+      <div ng-message="maxlength">Nazwa za dluga</div>
     </div>
 
 
@@ -22,25 +22,25 @@
         </div>
         <div ng-switch-when="pass">
           <div class="form-group">
-            <input name="password" class="form-control" type="text"
+            <input placeholder="haslo" name="password" class="form-control" type="text"
               ng-model="password"
               ng-minlength="3"
             >
             <button class="btn btn-primary">ustaw haslo</button>
             <div ng-messages="addParticipantForm.password.$error" style="color:maroon" role="alert">
-              <div ng-message="minlength">Your password is too short</div>
+              <div ng-message="minlength">Haslo jest za krotkie</div>
             </div>
           </div>
 
         </div>
         <div ng-switch-when="email">
-          <input name="email" class="form-control" type="email"
+          <input placeholder="email" name="email" class="form-control" type="email"
             ng-model="email"
 
           >
           <button class="btn btn-primary">wyslij email</button>
           <div ng-messages="addParticipantForm.email.$error" style="color:maroon" role="alert">
-
+            <div ng-message="email" ng-show="addParticipantForm.email.$error.email">Bledny email</div>
           </div>
         </div>
       </div>
