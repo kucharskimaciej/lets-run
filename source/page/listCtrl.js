@@ -12,6 +12,7 @@
       ctrl.addParticipant = function(data) {
         Participants.addParticipant(data).then(function(response){
           ctrl.participants.push(response.data);
+          console.log(response.data);
           ctrl.hideForm = true;
         });
       };
