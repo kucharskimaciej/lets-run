@@ -6,7 +6,7 @@ const {paths} = require('./config');
 gulp.task('watch', () => {
     gulp.start('build');
 
-    watch(paths.vendor, function () {
+    watch([paths.bowerfile, paths.vendor], function () {
         gulp.start('build:libs');
     });
     watch([paths.app], function () {
