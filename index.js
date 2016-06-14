@@ -29,7 +29,7 @@ const REDIS_OPTIONS = {
 const redisClient = require('redis').createClient(REDIS_OPTIONS);
 const redis = require('./lib/redisCommands')(redisClient);
 const redisSession = require('koa-redis')(REDIS_OPTIONS);
-
+const {sendRemoveConfirmation} = require('./lib/email');
 const app = koa();
 
 // PARSING
@@ -123,13 +123,24 @@ app.use(route.delete('/api/participants/:id/:token?', function* (id, token) {
         this.body = 'Invalid';
         return;
     }
-    const { pass } = this.request.body;
+    const { pass, email } = this.request.body;
 
     if (pass) {
-        if (user.pass !== String(pass)) {
+        if (user.pass !== pass) {
             this.status = 403;
         } else {
             yield redis.removeUser(user);
+            this.status = 200;
+        }
+
+        return;
+    }
+
+    if (email) {
+        if (user.email !== email) {
+            this.status = 403;
+        } else {
+            yield sendRemoveConfirmation(user);
             this.status = 200;
         }
 
