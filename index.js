@@ -140,8 +140,15 @@ app.use(route.delete('/api/participants/:id/:token?', function* (id, token) {
         if (user.email !== email) {
             this.status = 403;
         } else {
-            yield sendRemoveConfirmation(user);
-            this.status = 200;
+            try {
+                yield sendRemoveConfirmation(user);
+            } catch (err) {
+                this.status = 500;
+                this.body = 'Internal server error';
+                return;
+            }
+
+            this.status = 204;
         }
 
         return;
