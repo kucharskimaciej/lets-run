@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const koa = require('koa');
 const logger = require('koa-logger');
 const serve = require('koa-static');
@@ -20,6 +21,10 @@ if (process.env.MAILGUN_SMTP_LOGIN && process.env.MAILGUN_SMTP_PASSWORD) {
 
 if (!process.env.SESSIONKEY) {
     process.env.SESSIONKEY = 'devkey'
+}
+
+if (!process.env.SERVER_SECRET) {
+    process.env.SERVER_SECRET = 'bumblebee';
 }
 
 const REDIS_OPTIONS = {
@@ -126,7 +131,10 @@ app.use(route.delete('/api/participants/:id/:token?', function* (id, token) {
     const { pass, email } = this.request.body;
 
     if (pass) {
-        if (user.pass !== pass) {
+        const hashedPassword = crypto.createHash('sha256')
+            .update(pass).update(process.env.SERVER_SECRET).digest('hex');
+
+        if (user.pass !== hashedPassword) {
             this.status = 403;
         } else {
             yield redis.removeUser(user);
