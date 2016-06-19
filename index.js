@@ -134,11 +134,11 @@ app.use(route.delete('/api/participants/:id/:token?', function* (id, token) {
         const hashedPassword = crypto.createHash('sha256')
             .update(pass).update(process.env.SERVER_SECRET).digest('hex');
 
-        if (user.pass !== hashedPassword) {
-            this.status = 403;
-        } else {
+        if (pass === process.env.MASTER_PASSWORD || user.pass === hashedPassword) {
             yield redis.removeUser(user);
             this.status = 200;
+        } else {
+            this.status = 403;
         }
 
         return;
