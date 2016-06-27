@@ -8,8 +8,6 @@
         limit: '<'
       },
       controller: function(Participants){
-        console.log(this.limit);
-        console.log(this.limitFrom);
       }
     });
 
