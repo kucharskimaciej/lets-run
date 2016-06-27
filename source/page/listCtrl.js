@@ -7,7 +7,7 @@
       Participants.getAll().then(function(response){
         ctrl.participants = response.data;
       });
-
+      ctrl.limit = "";
       ctrl.participant = {};
       ctrl.addParticipant = function(data) {
         Participants.addParticipant(data).then(function(response){

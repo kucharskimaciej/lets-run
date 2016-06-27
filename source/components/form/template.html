@@ -15,31 +15,45 @@
 
 
     <div>
-      <select ng-model="selection" ng-options="item for item in $ctrl.items"></select>
-      <div ng-switch on="selection">
-        <div ng-switch-when="brak">
-          <h5>Brak potwierdzenia</h5>
-        </div>
-        <div ng-switch-when="pass">
-          <div class="form-group">
-            <input placeholder="haslo" name="pass" class="form-control" type="text" required
-              ng-model="$ctrl.participant.pass"
-              ng-minlength="3"
-            >
-            <div ng-messages="addParticipantForm.pass.$error" style="color:maroon" role="alert">
-              <div ng-message="minlength">Haslo jest za krotkie</div>
+      <div>
+        <input type="checkbox" ng-model="val2" ng-true-value="true" ng-false-value="false">
+          <label for="val2">Bez potwierdzenia</label>
+          <span ng-show="val2">
+            <h5>Brak potwierdzenia</h5>
+          </span>
+      </div>
+      <div>
+        <input type="checkbox" ng-model="val1" ng-true-value="true" ng-false-value="false">
+          <label for="val1">Podaj haslo</label>
+          <span ng-show="val1">
+            <div class="form-group">
+              <input placeholder="haslo" name="pass" class="form-control" type="text" required
+                ng-model="$ctrl.participant.pass"
+                ng-minlength="3"
+              >
+              <div ng-messages="addParticipantForm.pass.$error" style="color:maroon" role="alert">
+                <div ng-message="minlength">Haslo jest za krotkie</div>
+              </div>
             </div>
-          </div>
+          </span>
+      </div>
 
-        </div>
-        <div ng-switch-when="email">
-          <input placeholder="email" name="email" class="form-control" type="email" required
-            ng-model="$ctrl.participant.email"
-          >
-          <div ng-messages="addParticipantForm.email.$error" style="color:maroon" role="alert">
-            <div ng-message="email" ng-show="addParticipantForm.email.$error.email">Bledny email</div>
-          </div>
-        </div>
+      <div>
+        <input type="checkbox" ng-model="val3" ng-true-value="true" ng-false-value="false">
+          <label for="val3">Podaj maila</label>
+          <span ng-show="val3">
+            <div class="form-group">
+              <input placeholder="email" name="email" class="form-control" type="email" required
+                ng-model="$ctrl.participant.email"
+              >
+              <div ng-messages="addParticipantForm.email.$error" style="color:maroon" role="alert">
+                <div ng-message="email" ng-show="addParticipantForm.email.$error.email">Bledny email</div>
+              </div>
+            </div>
+          </span>
+      </div>
+
+
       </div>
     </div>
     <button class="btn btn-primary" type="submit">dodaj</button>

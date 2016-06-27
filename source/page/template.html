@@ -5,7 +5,9 @@
       <h3>Participants</h3>
       <div ng-controller="ParticipantsCtrl as ctrl">
         <form-comp add-participant="ctrl.addParticipant(data)" ng-hide="ctrl.hideForm"></form-comp>
-        <users-list-comp participants="ctrl.participants"></users-list-comp>
+        <users-list-comp participants="ctrl.participants" limit="20" limit-from="0"></users-list-comp>
+        <h1>lista oczekujacych</h1>
+        <users-list-comp participants="ctrl.participants" limit="" limit-from="20"></users-list-comp>
       </div>
     </div>
   </div>

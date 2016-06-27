@@ -3,12 +3,13 @@
     .component('usersListComp', {
       templateUrl: 'components/list/template.html',
       bindings: {
-        participants: '<'
+        participants: '<',
+        limitFrom: '<',
+        limit: '<'
       },
       controller: function(Participants){
-        // this.removeParticipant = function(participant) {
-        //   Participants.removeParticipant(participant);
-        // };
+        console.log(this.limit);
+        console.log(this.limitFrom);
       }
     });
 
