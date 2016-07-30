@@ -1,5 +1,5 @@
 (function(){
-  angular.module('usersList', ['participants'])
+  angular.module('usersList', ['participants', 'cookies'])
     .component('usersListComp', {
       templateUrl: 'components/list/template.html',
       bindings: {
@@ -7,7 +7,12 @@
         limitFrom: '<',
         limit: '<'
       },
-      controller: function(Participants){
+      controller: function(Participants, Cookies){
+        this.isCurrentUser = function(participant){
+          if (Cookies.isCurrentUser(participant.id)) {
+            return true;
+          }
+        };
       }
     });
 

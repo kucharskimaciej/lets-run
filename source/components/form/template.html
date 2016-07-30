@@ -1,9 +1,8 @@
 <div class="form-inline">
-  <form name="addParticipantForm" class="form-group" ng-submit="$ctrl.addParticipant({data: $ctrl.participant})">
+  <form novalidate name="addParticipantForm" class="form-group" ng-submit="$ctrl.submit($ctrl.participant)">
     <input name="addName" placeholder="name" class="form-control" type="text"
       ng-model="$ctrl.participant.name"
       required
-      novalidate
       ng-minlength="3"
       ng-maxlength="20"
       >
@@ -16,35 +15,37 @@
 
     <div>
       <div>
-        <input type="checkbox" ng-model="val2" ng-true-value="true" ng-false-value="false" ng-checked="true" ng-disabled="true">
-          <label for="val2">Cookies</label>
+        <input type="checkbox" id="cookies" ng-model="$ctrl.cookies" ng-true-value="true" ng-false-value="false" ng-checked="true" ng-disabled="true">
+          <label for="cookies">Cookies</label>
       </div>
       <div>
-        <input type="checkbox" ng-model="val1" ng-true-value="true" ng-false-value="false">
-          <label for="val1">Podaj haslo</label>
-          <span ng-show="val1">
-            <div class="form-group">
-              <input placeholder="haslo" name="pass" class="form-control" type="text" required
+        <input type="checkbox" ng-model="$ctrl.password" id="password" ng-true-value="true" ng-false-value="false">
+          <label for="password">Podaj haslo</label>
+          <span ng-if="$ctrl.password">
+            <div class="form-group" ng-class="{'has-error':addParticipantForm.pass.$invalid && addParticipantForm.pass.$touched}">
+              <input placeholder="haslo" name="pass" class="form-control" type="password" required
                 ng-model="$ctrl.participant.pass"
                 ng-minlength="3"
               >
-              <div ng-messages="addParticipantForm.pass.$error" style="color:maroon" role="alert">
+              <div ng-messages="addParticipantForm.pass.$error" style="color:maroon" role="alert" ng-show="addParticipantForm.pass.$touched">
                 <div ng-message="minlength">Haslo jest za krotkie</div>
+                <div ng-message="required">Haslo wymagane</div>
               </div>
             </div>
           </span>
       </div>
 
       <div>
-        <input type="checkbox" ng-model="val3" ng-true-value="true" ng-false-value="false">
-          <label for="val3">Podaj maila</label>
-          <span ng-show="val3">
-            <div class="form-group">
+        <input type="checkbox" ng-model="$ctrl.email" id="email" ng-true-value="true" ng-false-value="false">
+          <label for="email">Podaj maila</label>
+          <span ng-if="$ctrl.email">
+            <div class="form-group" ng-class="{'has-error':addParticipantForm.email.$invalid && addParticipantForm.email.$touched}">
               <input placeholder="email" name="email" class="form-control" type="email" required
                 ng-model="$ctrl.participant.email"
               >
-              <div ng-messages="addParticipantForm.email.$error" style="color:maroon" role="alert">
+              <div ng-messages="addParticipantForm.email.$error" style="color:maroon" role="alert" ng-show="addParticipantForm.email.$touched">
                 <div ng-message="email" ng-show="addParticipantForm.email.$error.email">Bledny email</div>
+                <div ng-message="required">email wymagany</div>
               </div>
             </div>
           </span>
@@ -52,8 +53,7 @@
 
 
       </div>
-    </div>
-    <button class="btn btn-primary" type="submit">dodaj</button>
+    <button class="btn btn-primary" ng-disabled='addParticipantForm.$invalid' type="submit">dodaj</button>
   </form>
 
 </div>

@@ -6,13 +6,13 @@
 
       Participants.getAll().then(function(response){
         ctrl.participants = response.data;
+        console.log(typeof ctrl.participants[0].id)
       });
       ctrl.limit = "";
       ctrl.participant = {};
       ctrl.addParticipant = function(data) {
         Participants.addParticipant(data).then(function(response){
           ctrl.participants.push(response.data);
-          console.log(response.data);
           ctrl.hideForm = true;
         });
       };

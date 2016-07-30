@@ -3,12 +3,19 @@
     .component('formComp', {
       templateUrl: 'components/form/template.html',
       bindings: {
-        addParticipant: '&'
+        addParticipant: '<'
       },
       controller: function(Participants){
-
-        this.items = ['brak', 'pass', 'email'];
-        this.selection = this.items[0];
+        this.participant = {};
+        this.submit = function(participant){
+          if (!this.password) {
+            delete this.participant.pass;
+          }
+          if (!this.email) {
+            delete this.participant.email;
+          }
+          this.addParticipant(participant);
+        };
       }
     });
 

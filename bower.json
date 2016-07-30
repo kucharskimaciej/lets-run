@@ -19,6 +19,10 @@
   "dependencies": {
     "angular": "^1.5.6",
     "angular-ui-router": "^0.3.0",
-    "angular-messages": "^1.5.6"
+    "angular-messages": "^1.5.6",
+    "angular-cookies": "^1.5.8"
+  },
+  "resolutions": {
+    "angular": "^1.5.6"
   }
 }
