@@ -10,9 +10,11 @@
 
     this.addParticipant = function(data){
       return $http.post('/api/participants', data).success(function(response){
-        console.log(response);
         Cookies.setCurrentUser(response.id);
       });
+    };
+    this.removeParticipant = function(id){
+      return $http.delete('/api/participants/' + id);
     };
   });
 })();

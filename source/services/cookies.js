@@ -8,7 +8,6 @@
     };
     this.isCurrentUser = function(id){
       var currentUserId = $cookies.get('currentUser');
-      console.log(id, currentUserId);
       if (id === Number(currentUserId)) {
         return true;
       }

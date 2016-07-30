@@ -6,7 +6,6 @@
 
       Participants.getAll().then(function(response){
         ctrl.participants = response.data;
-        console.log(typeof ctrl.participants[0].id)
       });
       ctrl.limit = "";
       ctrl.participant = {};
