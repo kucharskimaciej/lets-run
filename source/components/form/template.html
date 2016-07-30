@@ -1,8 +1,8 @@
-<div class="form-inline">
+<div class="">
   <form novalidate name="addParticipantForm" class="form-group" ng-submit="$ctrl.submit($ctrl.participant)">
     <div class="form-group" ng-class="{'has-error':addParticipantForm.addName.$invalid && addParticipantForm.addName.$touched}">
-      <label for="name">Your name</label>
-      <input name="addName" placeholder="name" class="form-control" type="text" id="name"
+      <label for="name">Nazwa uczestnika</label>
+      <input name="addName" placeholder="Wpisz swoje imię" class="form-control" type="text" id="name"
         ng-model="$ctrl.participant.name"
         required
         ng-minlength="3"
@@ -11,8 +11,8 @@
 
 
       <div ng-messages="addParticipantForm.addName.$error" style="color:maroon" role="alert" ng-show="addParticipantForm.addName.$touched">
-        <div ng-message="minlength">Nazwa za krotka</div>
-        <div ng-message="maxlength">Nazwa za dluga</div>
+        <div ng-message="minlength">Nazwa za krótka</div>
+        <div ng-message="maxlength">Nazwa za długa</div>
         <div ng-message="required">Nazwa wymagana</div>
       </div>
     </div>
@@ -22,11 +22,11 @@
     <div>
       <div>
         <input type="checkbox" id="cookies" ng-model="$ctrl.cookies" ng-true-value="true" ng-false-value="false" ng-checked="true" ng-disabled="true">
-          <label for="cookies">Cookies</label>
+          <label for="cookies">Ciasteczka</label>
       </div>
       <div>
         <input type="checkbox" ng-model="$ctrl.password" id="password" ng-true-value="true" ng-false-value="false">
-          <label for="password">Podaj haslo</label>
+          <label for="password">Podaj hasło</label>
           <span ng-if="$ctrl.password">
             <div class="form-group" ng-class="{'has-error':addParticipantForm.pass.$invalid && addParticipantForm.pass.$touched}">
               <input placeholder="haslo" name="pass" class="form-control" type="password" required
@@ -34,8 +34,8 @@
                 ng-minlength="3"
               >
               <div ng-messages="addParticipantForm.pass.$error" style="color:maroon" role="alert" ng-show="addParticipantForm.pass.$touched">
-                <div ng-message="minlength">Haslo jest za krotkie</div>
-                <div ng-message="required">Haslo wymagane</div>
+                <div ng-message="minlength">Hasło jest za krótkie</div>
+                <div ng-message="required">Hasło wymagane</div>
               </div>
             </div>
           </span>
@@ -43,15 +43,15 @@
 
       <div>
         <input type="checkbox" ng-model="$ctrl.email" id="email" ng-true-value="true" ng-false-value="false">
-          <label for="email">Podaj maila</label>
+          <label for="email">Podaj e-mail</label>
           <span ng-if="$ctrl.email">
             <div class="form-group" ng-class="{'has-error':addParticipantForm.email.$invalid && addParticipantForm.email.$touched}">
               <input placeholder="email" name="email" class="form-control" type="email" required
                 ng-model="$ctrl.participant.email"
               >
               <div ng-messages="addParticipantForm.email.$error" style="color:maroon" role="alert" ng-show="addParticipantForm.email.$touched">
-                <div ng-message="email" ng-show="addParticipantForm.email.$error.email">Bledny email</div>
-                <div ng-message="required">email wymagany</div>
+                <div ng-message="email" ng-show="addParticipantForm.email.$error.email">Błędny e-mail</div>
+                <div ng-message="required">E-mail wymagany</div>
               </div>
             </div>
           </span>
@@ -59,7 +59,11 @@
 
 
       </div>
-    <button class="btn btn-primary" ng-disabled='addParticipantForm.$invalid' type="submit">dodaj</button>
+    <button class="btn btn-primary" ng-disabled='addParticipantForm.$invalid' type="submit">Dodaj</button>
   </form>
 
+</div>
+<div>
+  <p>
+    Aby wziąć udział w biegu zapisz się na listę uczestników. Wpisz imię oraz wybierz opcję zapisu: możesz podać <b>hasło</b>, <b>e-mail</b> lub <b>tylko nazwę uczestnika</b>. <b>Hasło</b> lub <b>e-mail</b> będą potrzebne jeżeli będziesz chciał/a usunąć się z listy korzystając z <b>innego komputera</b>.
 </div>
