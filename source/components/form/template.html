@@ -1,16 +1,22 @@
 <div class="form-inline">
   <form novalidate name="addParticipantForm" class="form-group" ng-submit="$ctrl.submit($ctrl.participant)">
-    <input name="addName" placeholder="name" class="form-control" type="text"
-      ng-model="$ctrl.participant.name"
-      required
-      ng-minlength="3"
-      ng-maxlength="20"
-      >
+    <div class="form-group" ng-class="{'has-error':addParticipantForm.addName.$invalid && addParticipantForm.addName.$touched}">
+      <label for="name">Your name</label>
+      <input name="addName" placeholder="name" class="form-control" type="text" id="name"
+        ng-model="$ctrl.participant.name"
+        required
+        ng-minlength="3"
+        ng-maxlength="20"
+        >
 
-    <div ng-messages="addParticipantForm.addName.$error" style="color:maroon" role="alert">
-      <div ng-message="minlength">Nazwa za krotka</div>
-      <div ng-message="maxlength">Nazwa za dluga</div>
+
+      <div ng-messages="addParticipantForm.addName.$error" style="color:maroon" role="alert" ng-show="addParticipantForm.addName.$touched">
+        <div ng-message="minlength">Nazwa za krotka</div>
+        <div ng-message="maxlength">Nazwa za dluga</div>
+        <div ng-message="required">Nazwa wymagana</div>
+      </div>
     </div>
+
 
 
     <div>
